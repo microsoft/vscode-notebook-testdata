@@ -26,6 +26,7 @@
   * language services run in the main extension side, which listen to changes and requests from the webview
     * model creation/deletion and content change
     * completion, hover and signature requests
+    * 👓 it's not using [`monaco-languageclient`](https://github.com/TypeFox/monaco-languageclient)
 * keybindings
   * listen to keyboard events on the editor and handle simple ones `meta+up/down`, `meta+s`.
   * the rest of them are all Monaco builtin ones
