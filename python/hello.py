@@ -1,7 +1,5 @@
 #%%
-name = "peng"
-
-print(name)
+print("Hello World")
 
 #%%
 name2 = ""
