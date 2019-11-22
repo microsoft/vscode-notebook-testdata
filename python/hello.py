@@ -1,8 +1,10 @@
 #%%
-print("Hello World")
+msg = "Hello world"
+print(msg)
 
 #%%
-name2 = ""
+msg2 = "Hello world"
+print(msg2)
 
 
 # %%
