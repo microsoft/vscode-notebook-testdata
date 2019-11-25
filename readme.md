@@ -69,7 +69,8 @@
         * No **parameter hints**, no bracket matching
     * Since every code cell is a standalone monaco editor, there is no language features across cells, like suggestions from above code cells.
         * Technically it can be solved by registering a completion provider for Notebook cells' models.
-    * No virtualization.
+    * Debugging
+    * No rendering virtualization.
 
 
 ## Benchmarks
