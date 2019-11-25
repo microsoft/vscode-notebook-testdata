@@ -63,6 +63,12 @@
         * kernel is responsible for code cell execution
     * provide `save` handler for notebooks
  * Missing pieces
+    * Currently all editors in the notebook is specially initialzied
+        * It pretends to be in a diff editor (to disable a bunch of features)
+        * No minimap, rulers, indent guides
+        * No **parameter hints**, no bracket matching
+    * Since every code cell is a standalone monaco editor, there is no language features across cells, like suggestions from above code cells.
+        * Technically it can be solved by registering a completion provider for Notebook cells' models.
     * No virtualization.
 
 
