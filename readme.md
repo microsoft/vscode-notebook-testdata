@@ -85,14 +85,14 @@ See [details](https://github.com/rebornix/notebook-test/issues/1#issue-527483193
     * Language features require additional work for hooking up language server with code cell content
         * Jupyter notebook messages support *Code Completion* only at this moment
     * Debugging support requires additional work as well
-* Webview
+* Python (running in webview)
     * Cons
         * Keymaps
         * Extensions
     * Pros
         * No work required in core
         * Highly customizable
-* Core
+* ADS (running in core)
     * Cons
         * require domain knowledge of Notebook
         * require content sanitization or using webview/iframes to prevent it from affecting the core
