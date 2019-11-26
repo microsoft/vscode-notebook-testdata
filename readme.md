@@ -103,4 +103,9 @@ See [details](https://github.com/rebornix/notebook-test/issues/1#issue-527483193
 
 ## Jupyter notebook protocols
 
-See [details](https://github.com/rebornix/notebook-test/issues/2)
+* A jupyter notebook consists of cells and there are three major types of cells supported
+  * Code cell.
+  * Markdown cell.
+  * TextCell.
+* How a code cell is being executed
+  * See [details](https://github.com/rebornix/notebook-test/issues/2)
