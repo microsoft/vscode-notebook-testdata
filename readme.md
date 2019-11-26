@@ -67,6 +67,7 @@
         * It pretends to be in a diff editor (to disable a bunch of features)
         * No minimap, rulers, indent guides
         * No **parameter hints**, no bracket matching
+        *  I didn't get suggestion working, however Jupyter notebook extension sends completion request to `@jupyterlab/services`
     * Since every code cell is a standalone monaco editor, there is no language features across cells, like suggestions from above code cells.
         * Technically it can be solved by registering a completion provider for Notebook cells' models.
     * Debugging
@@ -76,3 +77,30 @@
 ## Benchmarks
 
 See [details](https://github.com/rebornix/notebook-test/issues/1#issue-527483193)
+
+## Pros and Cons
+
+* Common
+    * Performance is reasonable if Monaco Editor is optimized in both Web view and Core
+    * Language features require additional work for hooking up language server with code cell content
+        * Jupyter notebook messages support *Code Completion* only at this moment
+    * Debugging support requires additional work as well
+* Webview
+    * Cons
+        * Keymaps
+        * Extensions
+    * Pros
+        * No work required in core
+        * Highly customizable
+* Core
+    * Cons
+        * require domain knowledge of Notebook
+        * require content sanitization or using webview/iframes to prevent it from affecting the core
+    * Pros
+        * editors work the same way as others
+        * no additional cost for loading monaco editor and grammars, no trade for tokenization with webassembly
+        * the UI/UX would be consistent
+
+## Jupyter notebook protocols
+
+See [details](https://github.com/rebornix/notebook-test/issues/2)
