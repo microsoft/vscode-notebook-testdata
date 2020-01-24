@@ -9,12 +9,6 @@ A list of features for a Notebook **client**.
 - Language features
 
 
-
-
-
-
-
-
 Annotations
 
 | Mark | Description | 
@@ -23,18 +17,10 @@ Annotations
 | ✔️ | supported |
 
 
-
-
-
-
-
-
-
-
-
 ## Rendering
 
 A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
+
 
 
 ### Cell
@@ -43,7 +29,7 @@ A notebook consists of an ordered list of cells. Each cell can be markdown conte
 | ------------- | :---------: | ----- | ------------- |
 | Code | | | |
 | | Render editor with language | ✔️ |  |
-| | Editor height grow with content | | Note: make sure word wrapping works properly. |
+| | Editor height grow with content | ✔️ | Note: make sure word wrapping works properly |
 | | View output in seperate view | | For example view output in fullscreen |
 | Markdown  | | | |
 | | Live Preview | ✔️ | |
@@ -54,7 +40,6 @@ A notebook consists of an ordered list of cells. Each cell can be markdown conte
 | | HTML  | | Requires sanitization. |
 | | Video | | VS Code doesn't ship with ffmpeg |
 | | Attachments | | Used in Markdown |
-
 
 
 ### Output 
@@ -108,9 +93,6 @@ A notebook output might have mutiple mimetypes and a notebook client will choose
 Internally a notebook client should maintain two lists, one for mime types it can render and one for the display order.
 
 
-
-
-
 ### Cell metadata
 
 Cell metadata is used to control the rendering of a cell, for example we can disable editing of markdown cells by setting `editable` to `false`.
@@ -162,13 +144,6 @@ Ideally users can get similar experience with Notebook Editor as a normal Monaco
 | Line Numbers | ✔️ |  | This can be done by langauge/file specific settings |
 
 
-
-
-
-
-
-
-
 ## Cell Manipulation
 
 Currently we put all cell related actions in the context menu but it's not easily accessibable, we may want to have a better UX to ensure users can be **productive**.
@@ -190,25 +165,7 @@ Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/
 | Clear output | ✔️ | | |
 
 
-
-
-
-
-
-
-
-
-
 ## Keybindings
-
-
-
-
-
-
-
-
-
 
 
 ### Command Mode
@@ -267,14 +224,6 @@ Command Mode (press Esc to enable)
 
 
 
-
-
-
-
-
-
-
-
 ### Edit Mode
 
 Edit Mode (press Enter to enable)
@@ -315,15 +264,6 @@ Edit Mode (press Enter to enable)
 | ↑ | move cursor up | |
 
 
-
-
-
-
-
-
-
-
-
 ## Language Features
 
 |               |  Jupyter  | Notebook (exploration) | Notes | 
@@ -351,14 +291,5 @@ Edit Mode (press Enter to enable)
 Refs:
 
 * [Google Colaboratory](https://colab.research.google.com/notebooks/intro.ipynb#recent=true)
-
-
-
-
-
-
-
-
-
 
 
