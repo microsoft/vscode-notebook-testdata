@@ -1,19 +1,18 @@
 A list of features for a Notebook **client**.
 
-
 ## Top-level structure
 
 - Rendering
-  - Cell
-  - Output
-  - Cell metadata
-  - Output metadata
 - Editor features
 - Cell manipulation 
 - Keybindings/Commands
-  - Command mode
-  - Editing mode
 - Language features
+
+
+
+
+
+
 
 
 Annotations
@@ -24,27 +23,48 @@ Annotations
 | ✔️ | supported |
 
 
+
+
+
+
+
+
+
+
+
 ## Rendering
+
+A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
+
 
 ### Cell
 
 | Cell type | |  Notebook (exploration) | Notes | 
 | ------------- | :---------: | ----- | ------------- |
-| Code | | ✔️ | |
-| | View output separately | | For example view output in fullscreen |
+| Code | | | |
+| | Render editor with language | ✔️ |  |
+| | Editor height grow with content | | Note: make sure word wrapping works properly. |
+| | View output in seperate view | | For example view output in fullscreen |
 | Markdown  | | | |
-| | Top Down rendering | ✔️ | |
+| | Live Preview | ✔️ | |
 | | Side by side rendering |  | Google Colab did so |
 | | Commonmark  | ✔️ | |
 | | GFM  | ✔️ | |
 | | LaTeX equations  |  | |
-| | HTML  | | Simple HTML like tables |
+| | HTML  | | Requires sanitization. |
 | | Video | | VS Code doesn't ship with ffmpeg |
 | | Attachments | | Used in Markdown |
 
+
+
 ### Output 
 
-Refs: [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html)
+Refs:
+
+* [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html)
+* [ipython](https://ipython.readthedocs.io/en/stable/api/generated/IPython.core.formatters.html?highlight=text%2Flatex#IPython.core.formatters.DisplayFormatter)
+
+The following MIME types are usually implemented by Notebook client.
 
 | Output type | MIME type |  Notebook (exploration) | Notes | 
 | :---------: | :--------- | :---------: | :--------- |
@@ -53,25 +73,47 @@ Refs: [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats
 | error | | | |
 | | ansi | ✔️ | |
 | display_data |  |  | |
-|  | text/plain | | |
+|  | text/plain | ✔️ | |
 |  | text/markdown | | |
 |  | text/latex |  | | 
+|  | text/html | ✔️ | | 
 |  | image/png | ✔️ | | 
+|  | image/jpeg | ✔️ | | 
 |  | image/svg |  | | 
 |  | image/bmp |  | | 
 |  | image/gif |  | | 
-|  | image/jpeg |  | | 
 |  | image/svg+xml |  | | 
 |  | video | | VS Code doesn't ship with ffmpeg |
-|  | text/html | ✔️ | | 
 |  | application/javascript |  | | 
 |  | application/json |  | | 
 |  | application/pdf |  | | 
 |  | Interactive JavaScript wigets  | ✔️ | Contributed by extensions, like ipywidget or vega/vega-lite |
 |  | **Custom Mime Types** (`application/vnd*`) |  | Requires API or extensibility for contributing custom vender mime |  types handlers |
 
+A notebook output might have mutiple mimetypes and a notebook client will choose the richest mime type it can render. A display order for mime types can be as below
+
+* application/json
+* application/javascript
+* text/html
+* image/svg+xml
+* text/markdown
+* text/latex
+* image/svg+xml
+* image/gif
+* image/png
+* image/jpeg
+* application/pdf
+* text/plain
+
+Internally a notebook client should maintain two lists, one for mime types it can render and one for the display order.
+
+
+
+
 
 ### Cell metadata
+
+Cell metadata is used to control the rendering of a cell, for example we can disable editing of markdown cells by setting `editable` to `false`.
 
 Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.html#cell-metadata)
 
@@ -88,12 +130,16 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 
 ### Output metadata
 
+Output metadata can provide information of how to render an output.
+
 Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.html#output-metadata)
 
 |               |  Notebook (exploration) | Notes | 
 | ------------- | -----:| ------------- |
 | isolated |  | isolated outpuyt should be isolated into an iframe |
-| dimensions |  | `"metadata" : { "image/png": { "width": 640, "height": 480, } }` |
+| dimensions |  | `"metadata" : { "image/png": { "width": 640, "height": 480, } }` | 
+| needs_background | | light/dark |
+
 
 
 ## Editor Features
@@ -101,7 +147,7 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 Ideally users can get similar experience with Notebook Editor as a normal Monaco editor.
 
 |               |  Jupyter  | Notebook (exploration) | Notes | 
-| ------------- |:-------------:| -----:| ------------- |:-------------:|
+| ------------- |:-------------:| -----: |:-------------:|
 | Find & Replace in File  | ✔️ | |  |
 | Find & Replace in Cell  | ✔️ | |  |
 | Multi Cursor  |  | |  |
@@ -117,7 +163,15 @@ Ideally users can get similar experience with Notebook Editor as a normal Monaco
 
 
 
+
+
+
+
+
+
 ## Cell Manipulation
+
+Currently we put all cell related actions in the context menu but it's not easily accessibable, we may want to have a better UX to ensure users can be **productive**.
 
 Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/stable/developer/notebook.html)
 
@@ -136,7 +190,26 @@ Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/
 | Clear output | ✔️ | | |
 
 
+
+
+
+
+
+
+
+
+
 ## Keybindings
+
+
+
+
+
+
+
+
+
+
 
 ### Command Mode
 
@@ -192,6 +265,16 @@ Command Mode (press Esc to enable)
 | ⇧␣ | scroll notebook up | |
 | ␣ | scroll notebook down | |
 
+
+
+
+
+
+
+
+
+
+
 ### Edit Mode
 
 Edit Mode (press Enter to enable)
@@ -231,6 +314,16 @@ Edit Mode (press Enter to enable)
 | ↓ | move cursor down | |
 | ↑ | move cursor up | |
 
+
+
+
+
+
+
+
+
+
+
 ## Language Features
 
 |               |  Jupyter  | Notebook (exploration) | Notes | 
@@ -252,13 +345,20 @@ Edit Mode (press Enter to enable)
 | Breadcrumbs |  | | |
 | Peek View |  | | |
 
-
-
-
-
 ---
 
 
 Refs:
 
 * [Google Colaboratory](https://colab.research.google.com/notebooks/intro.ipynb#recent=true)
+
+
+
+
+
+
+
+
+
+
+
