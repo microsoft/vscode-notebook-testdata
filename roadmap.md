@@ -1,6 +1,6 @@
 A list of features for a Notebook **client**.
 
-## Top-level structure
+# Top-level structure
 
 - Rendering
 - Editor features
@@ -8,14 +8,12 @@ A list of features for a Notebook **client**.
 - Keybindings/Commands
 - Language features
 
-
 Annotations
 
 | Mark | Description | 
 | --- | --- |
 | 🏃 | work in progress |
 | ✔️ | supported |
-
 
 ## Rendering
 
@@ -29,7 +27,7 @@ A notebook consists of an ordered list of cells. Each cell can be markdown conte
 | ------------- | :---------: | ----- | ------------- |
 | Code | | | |
 | | Render editor with language | ✔️ |  |
-| | Editor height grow with content | ✔️ | Note: make sure word wrapping works properly |
+| | Editor height grow with content | 🏃 | Note: make sure word wrapping and folding works properly |
 | | View output in seperate view | | For example view output in fullscreen |
 | Markdown  | | | |
 | | Live Preview | ✔️ | |
@@ -122,27 +120,24 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 | dimensions |  | `"metadata" : { "image/png": { "width": 640, "height": 480, } }` | 
 | needs_background | | light/dark |
 
-
-
 ## Editor Features
 
-Ideally users can get similar experience with Notebook Editor as a normal Monaco editor.
+Below are features users usually expect from a normal text editor and we should see what we can support in the Notebook Editor and how.
 
 |               |  Jupyter  | Notebook (exploration) | Notes | 
 | ------------- |:-------------:| -----: |:-------------:|
-| Find & Replace in File  | ✔️ | |  |
+| Find & Replace in File  | ✔️ | | Do we allow F&R in editable Markdown cells? |
 | Find & Replace in Cell  | ✔️ | |  |
-| Multi Cursor  |  | |  |
-| Minimap  |  |  | |
+| Multi Cursor  |  | | Multi Cursor across cells |
+| Minimap  |  |  | Minimap for the whole document |
 | Auto Save | ✔️ | | |
-| Hot Exit |  | | |
-| Save As | ✔️ | | |
-| Snippets |  | | |
+| Hot Exit |  | | Hook up with Working Copy service |
+| Save As | ✔️ | | Notebook provider should implement both `save` and `saveAs` |
+| Snippets |  | | Code snippet and Cell snippet |
 | Diff | ✔️ | | Rich diff is supported by NBViewer |
-| Undo/Redo (across cells) | | | |
-| Cursor Movement (across cells) | ✔️ | | |
-| Line Numbers | ✔️ |  | This can be done by langauge/file specific settings |
-
+| Undo/Redo (across cells) | | | Requires a global undo/redo stack across monaco editors |
+| Cursor Movement (across cells) | ✔️ | | Mouse down listeners on editors |
+| Line Numbers | ✔️ |  | This might be done by langauge/file specific settings |
 
 ## Cell Manipulation
 
@@ -156,7 +151,7 @@ Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/
 | Create new markdown cell  | ✔️ | ✔️ | |
 | Create new code cell  | ✔️ | 🏃 | we need to implement langauge picker |
 | Move cell  | ✔️ |  |  |
-| Delete cell  | ✔️ | 🏃 |  |
+| Delete cell  | ✔️ | ✔️ |  |
 | Drag and Drop |  | | Supported in JupyterLab |
 | Expand/Collapse outputs |  | | |
 | Undo/Redo cell manipulation | ✔️ | | |
@@ -166,7 +161,6 @@ Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/
 
 
 ## Keybindings
-
 
 ### Command Mode
 
@@ -222,8 +216,6 @@ Command Mode (press Esc to enable)
 | ⇧␣ | scroll notebook up | |
 | ␣ | scroll notebook down | |
 
-
-
 ### Edit Mode
 
 Edit Mode (press Enter to enable)
@@ -263,29 +255,50 @@ Edit Mode (press Enter to enable)
 | ↓ | move cursor down | |
 | ↑ | move cursor up | |
 
-
 ## Language Features
 
-|               |  Jupyter  | Notebook (exploration) | Notes | 
-| ------------- |:-------------:| -----:| ------------- |
-| Rename  |  | |  |
-| Refactor  |  | |  |
-| Diagnostics  |  | |  |
-| Completion  |  | |  |
-| Go to Definition/Implmenation  |  | |  |
-| Codelens  |  | |  |
-| Hover  |  | |  |
-| Symbol  |  | |  |
-| References  |  | |  |
-| Formatters  |  | |  |
-| Link  |  | |  |
-| Color  |  | |  |
-| Folding  |  | |  |
-| Call hierarchy  |  | |  |
-| Breadcrumbs |  | | |
-| Peek View |  | | |
+Source code in code cells in a notebook are loosely coupled. You can import a module in one code cell and then use it directly in another code cell, however it doesn't mean that the `import` cell has to be layed before the other cell. As long as the `import` cell is executed first, the other cell is valid.
 
----
+When the notebook is not connected to a kernel or the execution sequence is unknown (which requires users' input), the language service for code cells needs to be fuzzy. The language service for the notebook may want to analyze all code cells and provide hints/suggestions based on heuristics.
+
+Language features can fall into following groups by their requirements
+
+### Definiton/Suggestion
+
+To support **Completions**, **Parameter hints**, **Hover** and **Diagnostics**, language service will read live content from every code cell
+
+- [ ] Expose code cells contents and event listeners for content change
+
+### Navigation
+
+Code navigation includes **Go to Definition/Implmenation**, **References/Peek View** and **Call hierarchy**. The challenge here is jumping between code cells in a notebook, instead of opening a regular code editor.
+
+- [ ] Support opening editor/models from a notebook document
+
+### Edits across cells
+
+Features like **Refactoring** and **Rename** might require Workspace-like Edits.
+
+- [ ] Support edits for multiple code cells
+
+
+### Embedded model support
+
+**Formatters** and **Symbols** can work seamlessly on individual code cells but we may also want a Notebook level (between normal document and workspace) formaters or symbols provider
+
+- [ ] Format notebook (format cells with different languages)
+- [ ] Notebook symbols (combination of symbols from different cells)
+
+
+### Cell agnostic
+
+Following features can be cell agnostic and we need to make sure the code cells are labeled as the right language
+
+* Syntax highlighting
+* Link detection
+* Color
+* Folding
+* Codelens
 
 
 Refs:
