@@ -7,6 +7,7 @@ A list of features for a Notebook **client**.
 - Cell manipulation 
 - Commands/Keybindings
 - Language features
+- Debug
 - MISC
 
 Annotations
@@ -22,7 +23,7 @@ Annotations
 
 A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
 
-Currently there are still two major missing pieces:
+Currently there are still two three missing pieces:
 
 - MIME Types
   - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
@@ -32,6 +33,8 @@ Currently there are still two major missing pieces:
 - Metadata
   - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
   - [ ] Output metadata, like whether the output should be rendered in an isolated context.
+- Comm between output and extension
+  - [ ] 2️⃣  API for extensions to talk to the output rendered in webview
 
 Fulls lists of cell types, output mime types and metadata we may want to support are listed below.
 
@@ -145,7 +148,7 @@ Notebooks contain text (markdown) and source code, so users would expect [code e
   - [ ] Find & Replace in Cell 
   - [ ] Multi cursor across cells
   - [ ] Undo/Redo across cells. Cell operations should be saved to Undo stack as well.
-  - [ ] Cursor movement across cells.
+  - [ ] 1️⃣ Cursor movement across cells.
   - [ ] Minimap for the whole notebook document
   - [ ] Snippets. Code snippets and cell snippets
   - [ ] Diff. 
@@ -158,16 +161,20 @@ Currently we put all cell related actions in the context menu but it's not easil
 
 Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/stable/developer/notebook.html)
 
-- [x] Create new markdown cell
-- [x] Create new code cell
-- [ ] 1️⃣ Move Cell
-- [x] Delete Cell
-- [ ] Drag and Drop. Supported in JupyterLab
-- [ ] Expand/Collapse outputs
-- [ ] 1️⃣ Undo/Redo cell manipulation
-- [x] Execute code cell
-- [ ] Cell selection
-- [ ] 1️⃣ Clear output
+- UX polish
+  - [ ] Run code cell, Edit
+  - [ ] Toolbar for other actions
+- Commands
+  - [x] Create new markdown cell
+  - [x] Create new code cell
+  - [ ] 1️⃣ Move Cell
+  - [x] Delete Cell
+  - [ ] Drag and Drop. Supported in JupyterLab
+  - [ ] Expand/Collapse outputs
+  - [ ] 1️⃣ Undo/Redo cell manipulation
+  - [x] Execute code cell
+  - [ ] Cell selection
+  - [ ] 1️⃣ Clear output
 
 ## Commands/Keybindings
 
@@ -320,8 +327,16 @@ Refs:
 * [Google Colaboratory](https://colab.research.google.com/notebooks/intro.ipynb#recent=true)
 
 
+# Debug
+
+In Jupyter Notebook, you can run code cell line by line and the kernel behaves like a debugger. In theory, debugging a code cell is similar to debugging a file. The notebook provider provides content from the active code cell in current notebook document, and initializes the debugging session with the kernel. The provider is also the debug adapter in this case.
+
+We need to validate if this can work and investigate how debugging should work when the kernel is not connected.
+
+
 ## MISC
 
 Bugs / Polish items
 
 - [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
+- [ ] Editing in nested code editor, cursor should always be visible.
