@@ -338,6 +338,6 @@ We need to validate if this can work and investigate how debugging should work w
 
 Bugs / Polish items
 
-- [ ] Notebook file not loaded from extension when opened the second time
+- [x] Notebook file not loaded from extension when opened the second time
 - [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
 - [ ] Editing in nested code editor, cursor should always be visible.
