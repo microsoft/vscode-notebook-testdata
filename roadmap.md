@@ -5,7 +5,7 @@ A list of features for a Notebook **client**.
 - Rendering
 - Editor features
 - Cell manipulation 
-- Commands/Keybindings
+  - Commands/Keybindings
 - Language features
 - Debug
 - MISC
@@ -19,7 +19,7 @@ Annotations
 | 1️⃣ | p1 |
 | 2️⃣ | p2 |
 
-## Rendering
+# Rendering
 
 A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
 
@@ -38,7 +38,7 @@ Currently there are still two three missing pieces:
 
 Fulls lists of cell types, output mime types and metadata we may want to support are listed below.
 
-### Cell
+## Cell
 
 - Code Cell
   - [x] Render source code in regular editor
@@ -57,7 +57,7 @@ Fulls lists of cell types, output mime types and metadata we may want to support
     - [ ] Video. Note that VS Code doesn't ship with ffmpeg
     - [ ] Attachments. References to local resources.
 
-### Output 
+## Output 
 
 Refs:
 
@@ -103,7 +103,7 @@ A notebook output might have mutiple mimetypes and a notebook client will choose
 Internally a notebook client should maintain two lists, one for mime types it can render and one for the display order.
 
 
-### Cell metadata
+## Cell metadata
 
 Cell metadata is used to control the rendering of a cell, for example we can disable editing of markdown cells by setting `editable` to `false`.
 
@@ -121,7 +121,7 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
   - outputs_hidden
 - [ ] execution (namespace)
 
-### Output metadata
+## Output metadata
 
 Output metadata can provide information of how to render an output.
 
@@ -131,7 +131,7 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 - [ ] 1️⃣ dimensions. `"metadata" : { "image/png": { "width": 640, "height": 480, } }`
 - needs_background
 
-## Editor Features
+# Editor Features
 
 Notebooks contain text (markdown) and source code, so users would expect [code editing features](https://code.visualstudio.com/docs/editor/codebasics) from the notebook editor. 
 
@@ -155,7 +155,7 @@ Notebooks contain text (markdown) and source code, so users would expect [code e
     - [ ] Text based diff. This one might require API works as notebook documents might not be persistent on disk.
     - [ ] Rich Diff. Similar to NBViewer, the core needs to diff and render rich diff.
 
-## Cell Manipulation
+# Cell Manipulation
 
 Currently we put all cell related actions in the context menu but it's not easily accessibable, we may want to have a better UX to ensure users can be **productive**.
 
@@ -275,7 +275,7 @@ Edit Mode (press Enter to enable)
 | ↓ | move cursor down | |
 | ↑ | move cursor up | |
 
-## Language Features
+# Language Features
 
 Source code in code cells in a notebook are loosely coupled. You can import a module in one code cell and then use it directly in another code cell, however it doesn't mean that the `import` cell has to be layed before the other cell. As long as the `import` cell is executed first, the other cell is valid.
 
@@ -283,27 +283,27 @@ When the notebook is not connected to a kernel or the execution sequence is unkn
 
 Language features can fall into following groups by their requirements
 
-### Definiton/Suggestion
+## Definiton/Suggestion
 
 To support **Completions**, **Parameter hints**, **Hover** and **Diagnostics**, language service will read live content from every code cell
 
 - [ ] API: Expose code cells contents and event listeners for content change
 - [ ] Extension register themselves as language features providers
 
-### Navigation
+## Navigation
 
 Code navigation includes **Go to Definition/Implmenation**, **References/Peek View** and **Call hierarchy**. The challenge here is jumping between code cells in a notebook, instead of opening a regular code editor.
 
 - [ ] Core: Support opening editor/models from a notebook document
 
-### Edits across cells
+## Edits across cells
 
 Features like **Refactoring** and **Rename** might require Workspace-like Edits.
 
 - [ ] Core & API: Support edits for multiple code cells
 
 
-### Embedded model support
+## Embedded model support
 
 **Formatters** and **Symbols** can work seamlessly on individual code cells but we may also want a Notebook level (between normal document and workspace) formaters or symbols provider
 
@@ -311,7 +311,7 @@ Features like **Refactoring** and **Rename** might require Workspace-like Edits.
 - [ ] Notebook symbols (combination of symbols from different cells)
 
 
-### Cell agnostic
+## Cell agnostic
 
 Following features can be cell agnostic and we need to make sure the code cells are labeled as the right language
 
@@ -334,9 +334,10 @@ In Jupyter Notebook, you can run code cell line by line and the kernel behaves l
 We need to validate if this can work and investigate how debugging should work when the kernel is not connected.
 
 
-## MISC
+# MISC
 
 Bugs / Polish items
 
+- [ ] Notebook file not loaded from extension when opened the second time
 - [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
 - [ ] Editing in nested code editor, cursor should always be visible.
