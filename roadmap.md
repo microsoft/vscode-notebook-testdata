@@ -5,8 +5,9 @@ A list of features for a Notebook **client**.
 - Rendering
 - Editor features
 - Cell manipulation 
-- Keybindings/Commands
+- Commands/Keybindings
 - Language features
+- MISC
 
 Annotations
 
@@ -14,31 +15,44 @@ Annotations
 | --- | --- |
 | 🏃 | work in progress |
 | ✔️ | supported |
+| 1️⃣ | p1 |
+| 2️⃣ | p2 |
 
 ## Rendering
 
 A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
 
+Currently there are still two major missing pieces:
 
+- MIME Types
+  - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
+  - [ ] `application/json`. An interactive JSON viewer
+  - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
+  - [ ] `application/scripts`.
+- Metadata
+  - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
+  - [ ] Output metadata, like whether the output should be rendered in an isolated context.
+
+Fulls lists of cell types, output mime types and metadata we may want to support are listed below.
 
 ### Cell
 
-| Cell type | |  Notebook (exploration) | Notes | 
-| ------------- | :---------: | ----- | ------------- |
-| Code | | | |
-| | Render editor with language | ✔️ |  |
-| | Editor height grow with content | 🏃 | Note: make sure word wrapping and folding works properly |
-| | View output in seperate view | | For example view output in fullscreen |
-| Markdown  | | | |
-| | Live Preview | ✔️ | |
-| | Side by side rendering |  | Google Colab did so |
-| | Commonmark  | ✔️ | |
-| | GFM  | ✔️ | |
-| | LaTeX equations  |  | |
-| | HTML  | | Requires sanitization. |
-| | Video | | VS Code doesn't ship with ffmpeg |
-| | Attachments | | Used in Markdown |
-
+- Code Cell
+  - [x] Render source code in regular editor
+  - [ ] 1️⃣ 🏃 Editor height grow with content.
+    - Note: make sure word wrapping and folding (one example for content widgets) work properly.
+  - [ ] View output in seperate view. For example view output in fullscreen
+- Markdown Cell
+  - [x] Live Preview
+    - [x] Editor/Preview splited vertically
+    - [ ] Side by side. Ref [Google Colab](https://colab.research.google.com/drive/16RMW8h7h2zcfuamLkhWucf2ooo82yky1#scrollTo=0h0u01uSB4nT)
+  - [ ] Markdown engine
+    - [x] Commonmark
+    - [x] GFM
+    - [ ] 1️⃣ LaTeX
+    - [ ] HTML
+    - [ ] Video. Note that VS Code doesn't ship with ffmpeg
+    - [ ] Attachments. References to local resources.
 
 ### Output 
 
@@ -47,31 +61,26 @@ Refs:
 * [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html)
 * [ipython](https://ipython.readthedocs.io/en/stable/api/generated/IPython.core.formatters.html?highlight=text%2Flatex#IPython.core.formatters.DisplayFormatter)
 
-The following MIME types are usually implemented by Notebook client.
+The following MIME types are usually implemented by Notebook client. We track all mime types we support with [test files](https://github.com/rebornix/notebook-test/blob/master/samples/mimetypes.ipynb).
 
-| Output type | MIME type |  Notebook (exploration) | Notes | 
-| :---------: | :--------- | :---------: | :--------- |
-| stream |  |  | |
-|  | text | ✔️ | |
-| error | | | |
-| | ansi | ✔️ | |
-| display_data |  |  | |
-|  | text/plain | ✔️ | |
-|  | text/markdown | | |
-|  | text/latex |  | | 
-|  | text/html | ✔️ | | 
-|  | image/png | ✔️ | | 
-|  | image/jpeg | ✔️ | | 
-|  | image/svg |  | | 
-|  | image/bmp |  | | 
-|  | image/gif |  | | 
-|  | image/svg+xml |  | | 
-|  | video | | VS Code doesn't ship with ffmpeg |
-|  | application/javascript |  | | 
-|  | application/json |  | | 
-|  | application/pdf |  | | 
-|  | Interactive JavaScript wigets  | ✔️ | Contributed by extensions, like ipywidget or vega/vega-lite |
-|  | **Custom Mime Types** (`application/vnd*`) |  | Requires API or extensibility for contributing custom vender mime |  types handlers |
+- Stream
+  - [x] Text
+  - [x] Error/ANSI
+- Display Data
+  - [x] text/plain
+  - [x] text/markdown
+  - [x] text/html
+  - [ ] 1️⃣ text/latex
+  - [x] image/png
+  - [x] image/jpeg
+  - [ ] 1️⃣ image/gif
+  - [ ] 1️⃣ image/bmp
+  - [ ] 1️⃣ image/svg+xml
+  - [ ] 1️⃣ application/javascript
+  - [ ] 1️⃣ application/json
+  - [ ] application/pdf
+  - [x] Interactive JavaScript wigets. Contributed by extensions, like ipywidget or vega/vega-lite
+  - [ ] **Custom Mime Types** (`application/vnd*`). Similar to above, might require API extensibility for contributing custom vendor mime types handler
 
 A notebook output might have mutiple mimetypes and a notebook client will choose the richest mime type it can render. A display order for mime types can be as below
 
@@ -97,16 +106,17 @@ Cell metadata is used to control the rendering of a cell, for example we can dis
 
 Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.html#cell-metadata)
 
-|               |  Notebook (exploration) | Notes | 
-| ------------- | -----:| ------------- |
-| editable |  | |
-| scrolled  |  | |
-| collapsed  |  | |
-| deletable  |  | |
-| name  |  | |
-| execution  |  | |
-| tags |  | |
-| format |  | |
+- [ ] 1️⃣ editable
+- [ ] 1️⃣ deletable
+- [ ] collapsed
+- [ ] scrolled
+- [ ] name
+- [ ] tags
+- [ ] format
+- [ ] jupyter (namespace)
+  - source_hidden
+  - outputs_hidden
+- [ ] execution (namespace)
 
 ### Output metadata
 
@@ -114,30 +124,33 @@ Output metadata can provide information of how to render an output.
 
 Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.html#output-metadata)
 
-|               |  Notebook (exploration) | Notes | 
-| ------------- | -----:| ------------- |
-| isolated |  | isolated outpuyt should be isolated into an iframe |
-| dimensions |  | `"metadata" : { "image/png": { "width": 640, "height": 480, } }` | 
-| needs_background | | light/dark |
+- [ ] 1️⃣ isolated. isolated output should be isolated into an iframe
+- [ ] 1️⃣ dimensions. `"metadata" : { "image/png": { "width": 640, "height": 480, } }`
+- needs_background
 
 ## Editor Features
 
-Below are features users usually expect from a normal text editor and we should see what we can support in the Notebook Editor and how.
+Notebooks contain text (markdown) and source code, so users would expect [code editing features](https://code.visualstudio.com/docs/editor/codebasics) from the notebook editor. 
 
-|               |  Jupyter  | Notebook (exploration) | Notes | 
-| ------------- |:-------------:| -----: |:-------------:|
-| Find & Replace in File  | ✔️ | | Do we allow F&R in editable Markdown cells? |
-| Find & Replace in Cell  | ✔️ | |  |
-| Multi Cursor  |  | | Multi Cursor across cells |
-| Minimap  |  |  | Minimap for the whole document |
-| Auto Save | ✔️ | | |
-| Hot Exit |  | | Hook up with Working Copy service |
-| Save As | ✔️ | | Notebook provider should implement both `save` and `saveAs` |
-| Snippets |  | | Code snippet and Cell snippet |
-| Diff | ✔️ | | Rich diff is supported by NBViewer |
-| Undo/Redo (across cells) | | | Requires a global undo/redo stack across monaco editors |
-| Cursor Movement (across cells) | ✔️ | | Mouse down listeners on editors |
-| Line Numbers | ✔️ |  | This might be done by langauge/file specific settings |
+- View/Model States
+  - [x] 1️⃣ Save
+  - [ ] 1️⃣ SaveAs
+  - [ ] 1️⃣ Auto Save
+  - [ ] Hot Exit
+  - [ ] View States
+    - [ ] 1️⃣ Cursor/Selection. Cursor states should be tracked when users scroll the notebook (our virtualization optimization leads to state loss now).
+    - [ ] 1️⃣ Move editor across editor groups and persist states
+- Basic Editing ([ref](https://code.visualstudio.com/docs/editor/codebasics))
+  - [ ] 1️⃣ Find & Replace in File. Users might want to F&R in editable markdown cells too.
+  - [ ] Find & Replace in Cell 
+  - [ ] Multi cursor across cells
+  - [ ] Undo/Redo across cells. Cell operations should be saved to Undo stack as well.
+  - [ ] Cursor movement across cells.
+  - [ ] Minimap for the whole notebook document
+  - [ ] Snippets. Code snippets and cell snippets
+  - [ ] Diff. 
+    - [ ] Text based diff. This one might require API works as notebook documents might not be persistent on disk.
+    - [ ] Rich Diff. Similar to NBViewer, the core needs to diff and render rich diff.
 
 ## Cell Manipulation
 
@@ -145,22 +158,22 @@ Currently we put all cell related actions in the context menu but it's not easil
 
 Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/stable/developer/notebook.html)
 
-|               |  Jupyter   | Notebook (exploration) | Notes | 
-| ------------- |:-------------:| :---------: |:-------------:|
-| Top level toolbar  | ✔️ |  | |
-| Create new markdown cell  | ✔️ | ✔️ | |
-| Create new code cell  | ✔️ | 🏃 | we need to implement langauge picker |
-| Move cell  | ✔️ |  |  |
-| Delete cell  | ✔️ | ✔️ |  |
-| Drag and Drop |  | | Supported in JupyterLab |
-| Expand/Collapse outputs |  | | |
-| Undo/Redo cell manipulation | ✔️ | | |
-| Execute code cell | ✔️ | ✔️ | |
-| Mutiple cell selection | ✔️ |  | |
-| Clear output | ✔️ | | |
+- [x] Create new markdown cell
+- [x] Create new code cell
+- [ ] 1️⃣ Move Cell
+- [x] Delete Cell
+- [ ] Drag and Drop. Supported in JupyterLab
+- [ ] Expand/Collapse outputs
+- [ ] 1️⃣ Undo/Redo cell manipulation
+- [x] Execute code cell
+- [ ] Cell selection
+- [ ] 1️⃣ Clear output
 
+## Commands/Keybindings
 
-## Keybindings
+Jupyter notebook web app has two modes: Command mode and Edit mode, which is similar to Vim's mode system. In Command mode, users can use keybindings to manipulate cells while Edit mode is used to edit content.
+
+Keybindings in Edit mode are pretty close to VS Code's builtin keybindings however Command mode has many conflicts with the core. We are going to implement the commands and users (or we) can build keymaps on top of them.
 
 ### Command Mode
 
@@ -222,31 +235,31 @@ Edit Mode (press Enter to enable)
 
 | Shortcut | Command | Notebook (exploration) |
 | --- | --- | --- |
-| ⇥ | code completion or indent | |
+| ⇥ | code completion or indent | ✔️  |
 | ⇧⇥ | tooltip | |
-| ⌘] | indent | |
-| ⌘[ | dedent | |
-| ⌘A | select all | |
-| ⌘Z | undo | |
-| ⌘/ | comment | |
+| ⌘] | indent | ✔️  |
+| ⌘[ | dedent | ✔️ |
+| ⌘A | select all | ✔️ |
+| ⌘Z | undo | ✔️ |
+| ⌘/ | comment | ✔️ |
 | ⌘D | delete whole line | |
-| ⌘U | undo selection | |
-| Insert | toggle overwrite flag | |
-| ⌘↑ | go to cell start | |
-| ⌘↓ | go to cell end | |
-| ⌥← | go one word left | |
-| ⌥→ | go one word right | |
-| ⌥⌫ | delete word before | |
-| ⌥⌦ | delete word after | |
-| ⌘⇧Z | redo | |
+| ⌘U | undo selection | ✔️ |
+| Insert | toggle overwrite flag | ✔️ |
+| ⌘↑ | go to cell start | ✔️ |
+| ⌘↓ | go to cell end | ✔️ |
+| ⌥← | go one word left | ✔️ |
+| ⌥→ | go one word right | ✔️ |
+| ⌥⌫ | delete word before | ✔️ |
+| ⌥⌦ | delete word after | ✔️ |
+| ⌘⇧Z | redo | ✔️ |
 | ⌘⇧U | redo selection | |
-| ⌃K | emacs-style line kill | |
-| ⌘⌫ | delete line left of cursor | |
-| ⌘⌦ | delete line right of cursor | |
+| ⌃K | emacs-style line kill | ✔️ |
+| ⌘⌫ | delete line left of cursor | ✔️ |
+| ⌘⌦ | delete line right of cursor | ✔️ |
 | ⌃M | enter command mode | |
 | Esc | enter command mode | |
 | ⌘⇧F | open the command palette | |
-| ⌘⇧P | open the command palette | |
+| ⌘⇧P | open the command palette | ✔️ |
 | ⇧↩ | run cell, select below | |
 | ⌃↩ | run selected cells | |
 | ⌥↩ | run cell and insert below | |
@@ -267,19 +280,20 @@ Language features can fall into following groups by their requirements
 
 To support **Completions**, **Parameter hints**, **Hover** and **Diagnostics**, language service will read live content from every code cell
 
-- [ ] Expose code cells contents and event listeners for content change
+- [ ] API: Expose code cells contents and event listeners for content change
+- [ ] Extension register themselves as language features providers
 
 ### Navigation
 
 Code navigation includes **Go to Definition/Implmenation**, **References/Peek View** and **Call hierarchy**. The challenge here is jumping between code cells in a notebook, instead of opening a regular code editor.
 
-- [ ] Support opening editor/models from a notebook document
+- [ ] Core: Support opening editor/models from a notebook document
 
 ### Edits across cells
 
 Features like **Refactoring** and **Rename** might require Workspace-like Edits.
 
-- [ ] Support edits for multiple code cells
+- [ ] Core & API: Support edits for multiple code cells
 
 
 ### Embedded model support
@@ -294,11 +308,11 @@ Features like **Refactoring** and **Rename** might require Workspace-like Edits.
 
 Following features can be cell agnostic and we need to make sure the code cells are labeled as the right language
 
-* Syntax highlighting
-* Link detection
-* Color
-* Folding
-* Codelens
+- [ ] Syntax highlighting
+- [ ] Link detection
+- [ ] Color
+- [ ] Folding
+- [ ] Codelens
 
 
 Refs:
@@ -306,3 +320,8 @@ Refs:
 * [Google Colaboratory](https://colab.research.google.com/notebooks/intro.ipynb#recent=true)
 
 
+## MISC
+
+Bugs / Polish items
+
+- [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
