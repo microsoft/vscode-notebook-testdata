@@ -187,7 +187,7 @@ Keybindings in Edit mode are pretty close to VS Code's builtin keybindings howev
 
 Command Mode (press Esc to enable)
 
-| Shortcut | Command | Notebook (exploration) |
+| Shortcut | Command | Status |
 | --- | --- | --- |
 | F | find and replace | |
 | ↩ | enter edit mode | |
@@ -197,8 +197,8 @@ Command Mode (press Esc to enable)
 | ⇧↩ | run cell, select below | 1️⃣ |
 | ⌃↩ | run selected cells | 1️⃣ |
 | ⌥↩ | run cell and insert below | 1️⃣ |
-| Y | change cell to code | |
-| M | change cell to markdown | |
+| Y | change cell to code | 1️⃣ |
+| M | change cell to markdown | 1️⃣ |
 | R | change cell to raw | |
 | 1 | change cell to heading 1 | |
 | 2 | change cell to heading 2 | |
@@ -241,7 +241,7 @@ Command Mode (press Esc to enable)
 
 Edit Mode (press Enter to enable)
 
-| Shortcut | Command | Notebook (exploration) |
+| Shortcut | Command | Status |
 | --- | --- | --- |
 | ⇥ | code completion or indent | ✔️  |
 | ⇧⇥ | tooltip | |
