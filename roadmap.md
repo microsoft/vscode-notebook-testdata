@@ -33,6 +33,7 @@ Currently there are still two three missing pieces:
 - Metadata
   - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
   - [ ] Output metadata, like whether the output should be rendered in an isolated context.
+  - [ ] Metadata **editing**
 - Comm between output and extension
   - [ ] 2️⃣  API for extensions to talk to the output rendered in webview
 
@@ -191,11 +192,11 @@ Command Mode (press Esc to enable)
 | F | find and replace | |
 | ↩ | enter edit mode | |
 | ⌘⇧F | open the command palette | |
-| ⌘⇧P | open the command palette | |
+| ⌘⇧P | open the command palette | ✔️ |
 | P | open the command palette | |
-| ⇧↩ | run cell, select below | |
-| ⌃↩ | run selected cells | |
-| ⌥↩ | run cell and insert below | |
+| ⇧↩ | run cell, select below | 1️⃣ |
+| ⌃↩ | run selected cells | 1️⃣ |
+| ⌥↩ | run cell and insert below | 1️⃣ |
 | Y | change cell to code | |
 | M | change cell to markdown | |
 | R | change cell to raw | |
@@ -206,24 +207,24 @@ Command Mode (press Esc to enable)
 | 5 | change cell to heading 5 | |
 | 6 | change cell to heading 6 | |
 | K | select cell above | |
-| ↑ | select cell above | |
-| ↓ | select cell below | |
+| ↑ | select cell above | 1️⃣ |
+| ↓ | select cell below | 1️⃣ |
 | J | select cell below | |
 | ⇧K | extend selected cells above | |
 | ⇧↑ | extend selected cells above | |
 | ⇧↓ | extend selected cells below | |
 | ⇧J | extend selected cells below | |
-| A | insert cell above | |
-| B | insert cell below | |
-| X | cut selected cells | |
-| C | copy selected cells | |
-| ⇧V | paste cells above | |
-| V | paste cells below | |
-| Z | undo cell deletion | |
+| A | insert cell above | 1️⃣ |
+| B | insert cell below | 1️⃣ |
+| X | cut selected cells | 1️⃣ |
+| C | copy selected cells | 1️⃣ |
+| ⇧V | paste cells above | 1️⃣ |
+| V | paste cells below | 1️⃣ |
+| Z | undo cell deletion | 1️⃣ |
 | D,D | delete selected cells | |
 | ⇧M | merge selected cells, or current cell with cell below if only one cell is selected | |
 | ⌘S | Save and Checkpoint | |
-| S | Save and Checkpoint | |
+| S | Save and Checkpoint | 1️⃣ |
 | L | toggle line numbers | |
 | O | toggle output of selected cells | |
 | ⇧O | toggle output scrolling of selected cells | |
