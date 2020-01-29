@@ -35,7 +35,7 @@ Currently there are still two three missing pieces:
   - [ ] Output metadata, like whether the output should be rendered in an isolated context.
   - [ ] Metadata **editing**
 - Comm between output and extension
-  - [ ] 2️⃣  API for extensions to talk to the output rendered in webview
+  - [ ] 2️⃣  API for notebook extensions to talk to the output rendered in webview
 
 Fulls lists of cell types, output mime types and metadata we may want to support are listed below.
 
@@ -45,16 +45,16 @@ Fulls lists of cell types, output mime types and metadata we may want to support
   - [x] Render source code in regular editor
   - [ ] 1️⃣ 🏃 Editor height grow with content.
     - Note: make sure word wrapping and folding (one example for content widgets) work properly.
-  - [ ] View output in seperate view. For example view output in fullscreen
+  - [ ] View output in seperate view. For example view output in fullscreen (contributed by notebook extensions)
 - Markdown Cell
   - [x] Live Preview
     - [x] Editor/Preview splited vertically
-    - [ ] Side by side. Ref [Google Colab](https://colab.research.google.com/drive/16RMW8h7h2zcfuamLkhWucf2ooo82yky1#scrollTo=0h0u01uSB4nT)
+    - [ ] Side by side. Ref [Google Colab](https://colab.research.google.com/drive/16RMW8h7h2zcfuamLkhWucf2ooo82yky1#scrollTo=0h0u01uSB4nT). (The preview can be in an another editor group, similar to markdown preview to the side)
   - [ ] Markdown engine
     - [x] Commonmark
     - [x] GFM
     - [ ] 1️⃣ LaTeX
-    - [ ] HTML
+    - [ ] HTML (we have HTML support with marked.js but not full HTML)
     - [ ] Video. Note that VS Code doesn't ship with ffmpeg
     - [ ] Attachments. References to local resources.
 
@@ -110,9 +110,9 @@ Cell metadata is used to control the rendering of a cell, for example we can dis
 
 Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.html#cell-metadata)
 
-- [ ] 1️⃣ editable
+- [ ] 1️⃣ editable/readonly
 - [ ] 1️⃣ deletable
-- [ ] collapsed
+- [ ] 1️⃣ collapsed
 - [ ] scrolled
 - [ ] name
 - [ ] tags
@@ -130,7 +130,7 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 
 - [ ] 1️⃣ isolated. isolated output should be isolated into an iframe
 - [ ] 1️⃣ dimensions. `"metadata" : { "image/png": { "width": 640, "height": 480, } }`
-- needs_background
+- [ ] needs_background. `light/dark`
 
 # Editor Features
 
