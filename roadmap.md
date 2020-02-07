@@ -27,7 +27,7 @@ Currently there are still two three missing pieces:
 
 - MIME Types
   - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
-  - [ ] `application/json`.
+  - [x] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
   - [x] `application/scripts`.
 - Metadata
@@ -80,8 +80,8 @@ The following MIME types are usually implemented by Notebook client. We track al
   - [ ] 1️⃣ image/gif
   - [ ] 1️⃣ image/bmp
   - [x] 1️⃣ image/svg+xml
-  - [ ] 1️⃣ application/javascript
-  - [ ] 1️⃣ application/json
+  - [x] 1️⃣ application/javascript
+  - [x] 1️⃣ application/json
   - [ ] application/pdf
   - [x] Interactive JavaScript wigets. Contributed by extensions, like ipywidget or vega/vega-lite
   - [ ] **Custom Mime Types** (`application/vnd*`). Similar to above, might require API extensibility for contributing custom vendor mime types handler
