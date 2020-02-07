@@ -27,9 +27,9 @@ Currently there are still two three missing pieces:
 
 - MIME Types
   - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
-  - [ ] `application/json`. An interactive JSON viewer
+  - [ ] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
-  - [ ] `application/scripts`.
+  - [x] `application/scripts`.
 - Metadata
   - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
   - [ ] Output metadata, like whether the output should be rendered in an isolated context.
@@ -79,7 +79,7 @@ The following MIME types are usually implemented by Notebook client. We track al
   - [x] image/jpeg
   - [ ] 1️⃣ image/gif
   - [ ] 1️⃣ image/bmp
-  - [ ] 1️⃣ image/svg+xml
+  - [x] 1️⃣ image/svg+xml
   - [ ] 1️⃣ application/javascript
   - [ ] 1️⃣ application/json
   - [ ] application/pdf
@@ -147,6 +147,7 @@ Notebooks contain text (markdown) and source code, so users would expect [code e
 - Basic Editing ([ref](https://code.visualstudio.com/docs/editor/codebasics))
   - [ ] 1️⃣ Find & Replace in File. Users might want to F&R in editable markdown cells too.
   - [ ] Find & Replace in Cell 
+  - [ ] Folding
   - [ ] Multi cursor across cells
   - [ ] Undo/Redo across cells. Cell operations should be saved to Undo stack as well.
   - [ ] 1️⃣ Cursor movement across cells.
@@ -342,3 +343,17 @@ Bugs / Polish items
 - [x] Notebook file not loaded from extension when opened the second time
 - [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
 - [ ] Editing in nested code editor, cursor should always be visible.
+- [ ] Vim Escape Key 
+  * Currently workaround the issue by adding keybinding
+  ```
+  {
+        "key": "escape",
+        "command": "extension.vim_escape",
+        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Normal'"
+    },
+    {
+        "key": "escape",
+        "command": "-extension.vim_escape",
+        "when": "editorTextFocus && vim.active && !inDebugRepl"
+    }
+  ```
