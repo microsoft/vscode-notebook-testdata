@@ -6,6 +6,7 @@ A list of features for a Notebook **client**.
 - Editor features
 - Cell manipulation 
   - Commands/Keybindings
+- Accessibility
 - Language features
 - Debug
 - MISC
@@ -277,6 +278,15 @@ Edit Mode (press Enter to enable)
 | ↓ | move cursor down | |
 | ↑ | move cursor up | |
 
+# Accessibility
+
+Classic Jupyter Notebook is lack of good accessibility support for code editing and navigations. While building the native notebook editor in core, we should make sure it's equally accessible as the text editor.
+
+Users from community already provides concrete examples of accessibility issues in classic Jupyter Notebook.
+
+Refs: 
+  * https://github.com/jupyter/notebook/issues/1801
+  * https://github.com/jupyterlab/jupyterlab/issues/4878
 # Language Features
 
 Source code in code cells in a notebook are loosely coupled. You can import a module in one code cell and then use it directly in another code cell, however it doesn't mean that the `import` cell has to be layed before the other cell. As long as the `import` cell is executed first, the other cell is valid.
@@ -345,7 +355,7 @@ Bugs / Polish items
 - [ ] Editing in nested code editor, cursor should always be visible.
 - [ ] Vim Escape Key 
   * Currently workaround the issue by adding keybinding
-  ```
+  ```json
   {
         "key": "escape",
         "command": "extension.vim_escape",
