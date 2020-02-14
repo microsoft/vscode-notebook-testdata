@@ -19,14 +19,14 @@ Annotations
 | ✔️ | supported |
 | 1️⃣ | p1 |
 | 2️⃣ | p2 |
-
+| 🐍 | supported in Python extension | 
 # Rendering
 
 A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
 
 Currently there are still two three missing pieces:
 
-- MIME Types
+- 🐍 MIME Types. Python ships with `nteract`
   - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
   - [x] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
@@ -44,7 +44,7 @@ Fulls lists of cell types, output mime types and metadata we may want to support
 
 - Code Cell
   - [x] Render source code in regular editor
-  - [ ] 1️⃣ 🏃 Editor height grow with content.
+  - [ ] 🐍 1️⃣ 🏃 Editor height grow with content.
     - Note: make sure word wrapping and folding (one example for content widgets) work properly.
   - [ ] View output in seperate view. For example view output in fullscreen (contributed by notebook extensions)
 - Markdown Cell
@@ -54,13 +54,15 @@ Fulls lists of cell types, output mime types and metadata we may want to support
   - [ ] Markdown engine
     - [x] Commonmark
     - [x] GFM
-    - [ ] 1️⃣ LaTeX
+    - [ ] 🐍 1️⃣ LaTeX
     - [ ] HTML (we have HTML support with marked.js but not full HTML)
     - [ ] Video. Note that VS Code doesn't ship with ffmpeg
     - [ ] Attachments. References to local resources.
 
 ## Output 
 
+
+🐍 Python supports all Mimetypes which are supported by `nteract`.
 Refs:
 
 * [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html)
@@ -139,14 +141,15 @@ Notebooks contain text (markdown) and source code, so users would expect [code e
 
 - View/Model States
   - [x] 1️⃣ Save
-  - [ ] 1️⃣ SaveAs
-  - [ ] 1️⃣ Auto Save
-  - [ ] Hot Exit
+  - [ ] 🐍 1️⃣ SaveAs
+  - [ ] 🐍 1️⃣ Auto Save
+  - [ ] 🐍 Hot Exit
   - [ ] View States
     - [ ] 1️⃣ Cursor/Selection. Cursor states should be tracked when users scroll the notebook (our virtualization optimization leads to state loss now).
     - [ ] 1️⃣ Move editor across editor groups and persist states
 - Basic Editing ([ref](https://code.visualstudio.com/docs/editor/codebasics))
-  - [ ] 1️⃣ Find & Replace in File. Users might want to F&R in editable markdown cells too.
+  - [ ] 🐍 1️⃣ Find in File. Users might want to F&R in editable markdown cells too.
+  - [ ] 1️⃣ Replace in File.
   - [ ] Find & Replace in Cell 
   - [ ] Folding
   - [ ] Multi cursor across cells
@@ -165,16 +168,16 @@ Currently we put all cell related actions in the context menu but it's not easil
 Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/stable/developer/notebook.html)
 
 - UX polish
-  - [ ] Run code cell, Edit
-  - [ ] Toolbar for other actions
+  - [ ] 🐍 Run code cell, Edit
+  - [ ] 🐍 Toolbar for other actions
 - Commands
   - [x] Create new markdown cell
   - [x] Create new code cell
-  - [ ] 1️⃣ Move Cell
+  - [ ] 🐍 1️⃣ Move Cell
   - [x] Delete Cell
   - [ ] Drag and Drop. Supported in JupyterLab
   - [ ] Expand/Collapse outputs
-  - [ ] 1️⃣ Undo/Redo cell manipulation
+  - [ ] 🐍 1️⃣ Undo/Redo cell manipulation
   - [x] Execute code cell
   - [ ] Cell selection
   - [ ] 1️⃣ Clear output
@@ -189,94 +192,94 @@ Keybindings in Edit mode are pretty close to VS Code's builtin keybindings howev
 
 Command Mode (press Esc to enable)
 
-| Shortcut | Command | Status |
-| --- | --- | --- |
-| F | find and replace | |
-| ↩ | enter edit mode | |
-| ⌘⇧F | open the command palette | |
-| ⌘⇧P | open the command palette | ✔️ |
-| P | open the command palette | |
-| ⇧↩ | run cell, select below | 1️⃣ |
-| ⌃↩ | run selected cells | 1️⃣ |
-| ⌥↩ | run cell and insert below | 1️⃣ |
-| Y | change cell to code | 1️⃣ |
-| M | change cell to markdown | 1️⃣ |
-| R | change cell to raw | |
-| 1 | change cell to heading 1 | |
-| 2 | change cell to heading 2 | |
-| 3 | change cell to heading 3 | |
-| 4 | change cell to heading 4 | |
-| 5 | change cell to heading 5 | |
-| 6 | change cell to heading 6 | |
-| K | select cell above | |
-| ↑ | select cell above | 1️⃣ |
-| ↓ | select cell below | 1️⃣ |
-| J | select cell below | |
-| ⇧K | extend selected cells above | |
-| ⇧↑ | extend selected cells above | |
-| ⇧↓ | extend selected cells below | |
-| ⇧J | extend selected cells below | |
-| A | insert cell above | 1️⃣ |
-| B | insert cell below | 1️⃣ |
-| X | cut selected cells | 1️⃣ |
-| C | copy selected cells | 1️⃣ |
-| ⇧V | paste cells above | 1️⃣ |
-| V | paste cells below | 1️⃣ |
-| Z | undo cell deletion | 1️⃣ |
-| D,D | delete selected cells | |
-| ⇧M | merge selected cells, or current cell with cell below if only one cell is selected | |
-| ⌘S | Save and Checkpoint | |
-| S | Save and Checkpoint | 1️⃣ |
-| L | toggle line numbers | |
-| O | toggle output of selected cells | |
-| ⇧O | toggle output scrolling of selected cells | |
-| H | show keyboard shortcuts | |
-| I,I | interrupt the kernel | |
-| 0,0 | restart the kernel (with dialog) | |
-| Esc | close the pager | |
-| Q | close the pager | |
-| ⇧L | toggles line numbers in all cells, and persist the setting | |
-| ⇧␣ | scroll notebook up | |
-| ␣ | scroll notebook down | |
+| Shortcut | Command | Status | Python | 
+| --- | --- | --- | --- | 
+| F | find and replace | | |
+| ↩ | enter edit mode | | |
+| ⌘⇧F | open the command palette | | |
+| ⌘⇧P | open the command palette | ✔️ | |
+| P | open the command palette | | |
+| ⇧↩ | run cell, select below | 1️⃣  | |
+| ⌃↩ | run selected cells | 1️⃣ | |
+| ⌥↩ | run cell and insert below | 1️⃣ | |
+| Y | change cell to code | 1️⃣ | |
+| M | change cell to markdown | 1️⃣ | |
+| R | change cell to raw | | |
+| 1 | change cell to heading 1 | | |
+| 2 | change cell to heading 2 | | |
+| 3 | change cell to heading 3 | | |
+| 4 | change cell to heading 4 | | |
+| 5 | change cell to heading 5 | | |
+| 6 | change cell to heading 6 | | |
+| K | select cell above | | |
+| ↑ | select cell above | 1️⃣ | |
+| ↓ | select cell below | 1️⃣ | |
+| J | select cell below | | |
+| ⇧K | extend selected cells above | | |
+| ⇧↑ | extend selected cells above | | |
+| ⇧↓ | extend selected cells below | | |
+| ⇧J | extend selected cells below | | |
+| A | insert cell above | 1️⃣ | |
+| B | insert cell below | 1️⃣ | |
+| X | cut selected cells | 1️⃣ | |
+| C | copy selected cells | 1️⃣ | |
+| ⇧V | paste cells above | 1️⃣ | |
+| V | paste cells below | 1️⃣ | |
+| Z | undo cell deletion | 1️⃣ | |
+| D,D | delete selected cells | | |
+| ⇧M | merge selected cells, or current cell with cell below if only one cell is selected | | |
+| ⌘S | Save and Checkpoint | | |
+| S | Save and Checkpoint | 1️⃣ | |
+| L | toggle line numbers | | |
+| O | toggle output of selected cells | | |
+| ⇧O | toggle output scrolling of selected cells | | |
+| H | show keyboard shortcuts | | |
+| I,I | interrupt the kernel | | |
+| 0,0 | restart the kernel (with dialog) | | |
+| Esc | close the pager | | |
+| Q | close the pager | | |
+| ⇧L | toggles line numbers in all cells, and persist the setting | | |
+| ⇧␣ | scroll notebook up | | |
+| ␣ | scroll notebook down | | |
 
 ### Edit Mode
 
 Edit Mode (press Enter to enable)
 
-| Shortcut | Command | Status |
-| --- | --- | --- |
-| ⇥ | code completion or indent | ✔️  |
-| ⇧⇥ | tooltip | |
-| ⌘] | indent | ✔️  |
-| ⌘[ | dedent | ✔️ |
-| ⌘A | select all | ✔️ |
-| ⌘Z | undo | ✔️ |
-| ⌘/ | comment | ✔️ |
-| ⌘D | delete whole line | |
-| ⌘U | undo selection | ✔️ |
-| Insert | toggle overwrite flag | ✔️ |
-| ⌘↑ | go to cell start | ✔️ |
-| ⌘↓ | go to cell end | ✔️ |
-| ⌥← | go one word left | ✔️ |
-| ⌥→ | go one word right | ✔️ |
-| ⌥⌫ | delete word before | ✔️ |
-| ⌥⌦ | delete word after | ✔️ |
-| ⌘⇧Z | redo | ✔️ |
-| ⌘⇧U | redo selection | |
-| ⌃K | emacs-style line kill | ✔️ |
-| ⌘⌫ | delete line left of cursor | ✔️ |
-| ⌘⌦ | delete line right of cursor | ✔️ |
-| ⌃M | enter command mode | |
-| Esc | enter command mode | |
-| ⌘⇧F | open the command palette | |
-| ⌘⇧P | open the command palette | ✔️ |
-| ⇧↩ | run cell, select below | |
-| ⌃↩ | run selected cells | |
-| ⌥↩ | run cell and insert below | |
-| ⌃⇧Minus | split cell at cursor | |
-| ⌘S | Save and Checkpoint | |
-| ↓ | move cursor down | |
-| ↑ | move cursor up | |
+| Shortcut | Command | Status | Python |
+| --- | --- | --- | --- |
+| ⇥ | code completion or indent | ✔️  | |
+| ⇧⇥ | tooltip | | |
+| ⌘] | indent | ✔️  | |
+| ⌘[ | dedent | ✔️ | |
+| ⌘A | select all | ✔️ | |
+| ⌘Z | undo | ✔️ | |
+| ⌘/ | comment | ✔️ | |
+| ⌘D | delete whole line | | |
+| ⌘U | undo selection | ✔️ | |
+| Insert | toggle overwrite flag | ✔️ | |
+| ⌘↑ | go to cell start | ✔️ | |
+| ⌘↓ | go to cell end | ✔️ | |
+| ⌥← | go one word left | ✔️ | |
+| ⌥→ | go one word right | ✔️ | |
+| ⌥⌫ | delete word before | ✔️ | |
+| ⌥⌦ | delete word after | ✔️ | |
+| ⌘⇧Z | redo | ✔️ | |
+| ⌘⇧U | redo selection | | |
+| ⌃K | emacs-style line kill | ✔️ | |
+| ⌘⌫ | delete line left of cursor | ✔️ | |
+| ⌘⌦ | delete line right of cursor | ✔️ | |
+| ⌃M | enter command mode | | |
+| Esc | enter command mode | | |
+| ⌘⇧F | open the command palette | | |
+| ⌘⇧P | open the command palette | ✔️ | |
+| ⇧↩ | run cell, select below | | |
+| ⌃↩ | run selected cells | | |
+| ⌥↩ | run cell and insert below | | |
+| ⌃⇧Minus | split cell at cursor | | |
+| ⌘S | Save and Checkpoint | | |
+| ↓ | move cursor down | | |
+| ↑ | move cursor up | | |
 
 # Accessibility
 
@@ -301,6 +304,8 @@ To support **Completions**, **Parameter hints**, **Hover** and **Diagnostics**, 
 
 - [ ] API: Expose code cells contents and event listeners for content change
 - [ ] Extension register themselves as language features providers
+
+🐍 Completions, Parameter Hints, Hover. Code cells are concatenated from top to bottom. 
 
 ## Navigation
 
@@ -367,3 +372,4 @@ Bugs / Polish items
         "when": "editorTextFocus && vim.active && !inDebugRepl"
     }
   ```
+- [ ] Python extension activation slows down notebook file opening.
