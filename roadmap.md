@@ -27,7 +27,7 @@ A notebook consists of an ordered list of cells. Each cell can be markdown conte
 Currently there are still two three missing pieces:
 
 - 🐍 MIME Types. Python ships with `nteract`
-  - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
+  - [x] LaTeX. Users may use them in both Markdown Cell or Outputs.
   - [x] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
   - [x] `application/scripts`.
@@ -44,7 +44,7 @@ Fulls lists of cell types, output mime types and metadata we may want to support
 
 - Code Cell
   - [x] Render source code in regular editor
-  - [ ] 🐍 1️⃣ 🏃 Editor height grow with content.
+  - [x] 🐍 1️⃣ Editor height grow with content.
     - Note: make sure word wrapping and folding (one example for content widgets) work properly.
   - [ ] View output in seperate view. For example view output in fullscreen (contributed by notebook extensions)
 - Markdown Cell
@@ -61,6 +61,7 @@ Fulls lists of cell types, output mime types and metadata we may want to support
 
 ## Output 
 
+- [x] Now we delegate custom mimetype rendering to extensions so we will only implement limited mime type rendering in the core.
 
 🐍 Python supports all Mimetypes which are supported by `nteract`.
 Refs:
@@ -77,16 +78,19 @@ The following MIME types are usually implemented by Notebook client. We track al
   - [x] text/plain
   - [x] text/markdown
   - [x] text/html
-  - [ ] 1️⃣ text/latex
   - [x] image/png
   - [x] image/jpeg
-  - [ ] 1️⃣ image/gif
-  - [ ] 1️⃣ image/bmp
   - [x] 1️⃣ image/svg+xml
   - [x] 1️⃣ application/javascript
   - [x] 1️⃣ application/json
-  - [ ] application/pdf
+
+Contributed by extensions
+
   - [x] Interactive JavaScript wigets. Contributed by extensions, like ipywidget or vega/vega-lite
+  - [ ] 1️⃣ text/latex
+  - [ ] 1️⃣ image/gif
+  - [ ] 1️⃣ image/bmp
+  - [ ] application/pdf
   - [ ] **Custom Mime Types** (`application/vnd*`). Similar to above, might require API extensibility for contributing custom vendor mime types handler
 
 Notebook outputs might have mutiple mimetypes and notebook clients will choose the richest mime type they can render. The display order for mime types can be as below
