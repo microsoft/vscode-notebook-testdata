@@ -360,9 +360,9 @@ We need to validate if this can work and investigate how debugging should work w
 Bugs / Polish items
 
 - [x] Notebook file not loaded from extension when opened the second time
-- [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
+- [x] Activation events for notebook provider. Activate extension when a notebook file is opened.
 - [ ] Editing in nested code editor, cursor should always be visible.
-- [ ] Vim Escape Key 
+- [x] Vim Escape Key 
   * Currently workaround the issue by adding keybinding
   ```json
   {
@@ -376,4 +376,7 @@ Bugs / Polish items
         "when": "editorTextFocus && vim.active && !inDebugRepl"
     }
   ```
-- [ ] Python extension activation slows down notebook file opening.
+- [x] Python extension activation slows down notebook file opening. (Mitigated when text models in code cells are lazily resolved.)
+- [ ] Saving: `activeNotebookDocument` is `undefined` if there is no active code cell being edited. `ExtHostNotebookController._documents` is empty when that happens.
+- [ ] Markdown preview and text editor somethings out of sync
+
