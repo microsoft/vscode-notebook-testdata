@@ -26,10 +26,10 @@ A notebook consists of an ordered list of cells. Each cell can be markdown conte
 
 Currently there are still two three missing pieces:
 
-- 🐍 MIME Types. Python ships with `nteract`
-  - [x] LaTeX. Users may use them in both Markdown Cell or Outputs.
+- [x] 🐍 MIME Types. Python ships with `nteract`.
+  - [x] LaTeX. Supported by customn renderers.
   - [x] `application/json`.
-  - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
+  - [x] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
   - [x] `application/scripts`.
 - Metadata
   - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
