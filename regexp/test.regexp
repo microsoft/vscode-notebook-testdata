@@ -1,1 +1,1 @@
-["/Hello W(orld|elt)!/","/Johan{2}es/","/^(([^:/?#]+?):)?(\\/\\/([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?/","/(\\s*)\\^/"]
+[{"kind":2,"language":"regexp","value":"/Hello (World|Welt)!/"},{"kind":2,"language":"regexp","value":"Johan{2}es"},{"kind":1,"language":"markdown","value":"The `Uri` regular expression that we are using - splits a string into the five uri parts (scheme, authority, path, query, fragment)"},{"kind":2,"language":"regexp","value":"/^(([^:/?#]+?):)?(\\/\\/([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?/"}]
